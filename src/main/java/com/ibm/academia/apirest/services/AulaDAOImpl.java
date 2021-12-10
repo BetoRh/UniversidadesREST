@@ -3,9 +3,11 @@ package com.ibm.academia.apirest.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Aula;
 import com.ibm.academia.apirest.enums.Pizarron;
+import com.ibm.academia.apirest.models.entities.Aula;
+import com.ibm.academia.apirest.models.entities.Carrera;
 import com.ibm.academia.apirest.repositories.AulaRepository;
 
 @Service
@@ -21,11 +23,12 @@ public class AulaDAOImpl extends GenericoDAOImpl<Aula, AulaRepository> implement
 		
 	}
 
-	@Override
-	public Iterable<Aula> buscarAulaPorTipoPizzarra(String pizarron) {
+	/*@Override
+	@Transactional
+	public Iterable<Aula> buscarAulaPorTipoPizzarra(Pizarron pizarron) {
 		
 		return aulaRepository.buscarAulaPorTipoPizzarra(pizarron);
-	}
+	}*/
 
 	
 	@Override
@@ -35,9 +38,20 @@ public class AulaDAOImpl extends GenericoDAOImpl<Aula, AulaRepository> implement
 	}
 	
 	@Override
-	public Iterable<Aula> buscarAulaporNumero(@Param("numero_aula") Integer numero_aula) {
+	public Iterable<Aula> buscarAulaporNumero(Integer numero_aula) {
 		
 		return aulaRepository.buscarAulaporNumero(numero_aula);
+	}
+
+	@Override
+	public Aula actualizar(Aula aulaEncontrada, Aula aula) {
+		
+		Aula aulaActualizada = null;
+		aulaEncontrada.setNumeroAula(aula.getNumeroAula());
+		aulaEncontrada.setCantidadPupitres(aula.getCantidadPupitres());;
+		aulaEncontrada.setPizarron(aula.getPizarron());
+		aulaActualizada = repository.save(aulaEncontrada);
+		return aulaActualizada;
 	}
 
 

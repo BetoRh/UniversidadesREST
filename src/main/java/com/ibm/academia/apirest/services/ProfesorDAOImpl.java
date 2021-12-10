@@ -1,12 +1,16 @@
 package com.ibm.academia.apirest.services;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Persona;
-import com.ibm.academia.apirest.entities.Profesor;
+import com.ibm.academia.apirest.models.entities.Alumno;
+import com.ibm.academia.apirest.models.entities.Carrera;
+import com.ibm.academia.apirest.models.entities.Persona;
+import com.ibm.academia.apirest.models.entities.Profesor;
 import com.ibm.academia.apirest.repositories.PersonaRepository;
 import com.ibm.academia.apirest.repositories.ProfesorRepository;
 
@@ -24,11 +28,30 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
 	}
 
 	@Override
+	@Transactional
 	public Iterable<Persona> findProfesoresByCarrera(String nombre) {
 		
 		return profesorRepository.findProfesoresByCarrera(nombre);
 	}
 
+	@Override
+	@Transactional
+	public Persona actualizar(Persona profesorEncontrado, Persona profesor) {
+		Persona profesorActualizado = null;
+		profesorEncontrado.setNombre(profesor.getNombre());
+		profesorEncontrado.setApellido(profesor.getApellido());
+		profesorEncontrado.setDireccion(profesor.getDireccion());
+		profesorActualizado = repository.save(profesorEncontrado);
+		return profesorActualizado;
+	}
+
+	@Override
+	@Transactional
+	public Persona asociarCarreraProfesor(Persona profesor, Carrera carrera) {
+		
+		((Profesor)profesor).setCarreras((Set<Carrera>) carrera);
+		return repository.save(profesor);
+	}
 	
 }
 	

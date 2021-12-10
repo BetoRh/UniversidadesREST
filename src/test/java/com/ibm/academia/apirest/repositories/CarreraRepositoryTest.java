@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.ibm.academia.apirest.datos.DatosDummy;
-import com.ibm.academia.apirest.entities.Carrera;
+import com.ibm.academia.apirest.models.entities.Carrera;
 
 @DataJpaTest
 
@@ -43,8 +43,10 @@ public class CarreraRepositoryTest {
 		/*carreraRepository.save(DatosDummy.carrera01());
 		carreraRepository.save(DatosDummy.carrera02());
 		carreraRepository.save(DatosDummy.carrera03());*/
+		
 		//When
 		Iterable<Carrera> expected = carreraRepository.findCarrerasByNombreContains("Sistemas");
+		
 		//Then
 		assertThat(((List<Carrera>)expected).size() == 2).isTrue();
 	}
@@ -57,8 +59,10 @@ public class CarreraRepositoryTest {
 				/*carreraRepository.save(DatosDummy.carrera01());
 				carreraRepository.save(DatosDummy.carrera02());
 				carreraRepository.save(DatosDummy.carrera03());*/
+		
 		//When
 		List<Carrera> expected =(List<Carrera>) carreraRepository.findCarrerasByNombreContainsIgnoreCase("sistemas");
+		
 		//Then
 		assertThat(expected.size() == 2).isTrue(); 
 	}

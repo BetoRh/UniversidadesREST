@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Persona;
+import com.ibm.academia.apirest.models.entities.Persona;
 import com.ibm.academia.apirest.repositories.PersonaRepository;
 
 public class PersonaDAOImpl extends GenericoDAOImpl<Persona, PersonaRepository> implements PersonaDAO {
@@ -37,4 +37,7 @@ public class PersonaDAOImpl extends GenericoDAOImpl<Persona, PersonaRepository> 
 		return (Iterable<Persona>) repository.buscarPersonaPorApellido(apellido);
 	}
 
-}
+
+	}
+
+
